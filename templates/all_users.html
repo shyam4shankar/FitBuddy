@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        FitBuddy | Admin Dashboard
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<main class="container wide">
+
+
+    <div class="topbar">
+
+
+        <a
+            href="/"
+            class="brand"
+        >
+            FitBuddy
+        </a>
+
+
+        <a href="/">
+            Create plan
+        </a>
+
+
+    </div>
+
+
+    <section class="card">
+
+
+        <span class="badge">
+            ADMIN VIEW
+        </span>
+
+
+        <h1>
+            All Users
+        </h1>
+
+
+        <p class="muted">
+
+            Local development dashboard.
+            Add authentication before deploying
+            this page publicly.
+
+        </p>
+
+
+        {% if not rows %}
+
+
+            <p>
+                No users have been created yet.
+            </p>
+
+
+        {% else %}
+
+
+        <div class="table-wrap">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            User ID
+                        </th>
+
+                        <th>
+                            Name
+                        </th>
+
+                        <th>
+                            Age
+                        </th>
+
+                        <th>
+                            Weight
+                        </th>
+
+                        <th>
+                            Goal
+                        </th>
+
+                        <th>
+                            Intensity
+                        </th>
+
+                        <th>
+                            Original Plan
+                        </th>
+
+                        <th>
+                            Updated Plan
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% for row in rows %}
+
+
+                    <tr>
+
+
+                        <td>
+                            {{ row.user.user_id }}
+                        </td>
+
+
+                        <td>
+                            {{ row.user.username }}
+                        </td>
+
+
+                        <td>
+                            {{ row.user.age }}
+                        </td>
+
+
+                        <td>
+                            {{ row.user.weight }} kg
+                        </td>
+
+
+                        <td>
+                            {{ row.user.goal }}
+                        </td>
+
+
+                        <td>
+                            {{ row.user.intensity }}
+                        </td>
+
+
+                        <td>
+
+                            <pre>
+
+{{ row.plan.original_plan if row.plan else "—" }}
+
+                            </pre>
+
+                        </td>
+
+
+                        <td>
+
+                            <pre>
+
+{{ row.plan.updated_plan if row.plan and row.plan.updated_plan else "—" }}
+
+                            </pre>
+
+                        </td>
+
+
+                        <td>
+
+
+                            <form
+                                method="post"
+                                action="/delete-user/{{ row.user.user_id }}"
+                                onsubmit="return confirm('Delete this user and their plans?');"
+                            >
+
+
+                                <button
+                                    class="danger small"
+                                    type="submit"
+                                >
+
+                                    Delete
+
+                                </button>
+
+
+                            </form>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

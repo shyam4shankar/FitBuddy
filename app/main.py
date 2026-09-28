@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from __future__ import annotations
 
 from typing import List
@@ -61,3 +62,51 @@ def generate_plan(payload: FitnessPlanRequest) -> FitnessPlanResponse:
         ]
 
     return FitnessPlanResponse(summary=summary, weekly_plan=weekly_plan[:7], notes=notes[:5])
+=======
+from contextlib import asynccontextmanager
+from pathlib import Path
+
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+from app.database import init_db
+from app.routes import router
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIR = BASE_DIR / "templates"
+STATIC_DIR = BASE_DIR / "static"
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    init_db()
+    yield
+
+
+app = FastAPI(
+    title="FitBuddy - AI Fitness Plan Generator",
+    description=(
+        "AI-assisted 7-day workout and wellness planning "
+        "with Gemini, FastAPI, Jinja2 and SQLite."
+    ),
+    version="1.0.0",
+    lifespan=lifespan,
+)
+
+
+app.mount(
+    "/static",
+    StaticFiles(directory=STATIC_DIR),
+    name="static",
+)
+
+
+templates = Jinja2Templates(
+    directory=TEMPLATES_DIR
+)
+
+
+app.include_router(router)
+>>>>>>> e41828e (Initial FitBuddy project)

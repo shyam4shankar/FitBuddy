@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitBuddy | Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+
+<body>
+    <main class="container wide">
+        <div class="topbar">
+            <a href="/" class="brand">FitBuddy</a>
+            <a href="/view-all-users">All users</a>
+        </div>
+
+        {% if message %}
+        <div class="alert success">{{ message }}</div>
+        {% endif %}
+
+        {% if user %}
+        <section class="card">
+            <span class="badge">PROFILE</span>
+            <h2>{{ user.username }}</h2>
+            <div class="profile-grid">
+                <div>
+                    <strong>User ID</strong>
+                    <span>{{ user.user_id }}</span>
+                </div>
+                <div>
+                    <strong>Age</strong>
+                    <span>{{ user.age }}</span>
+                </div>
+                <div>
+                    <strong>Weight</strong>
+                    <span>{{ user.weight }} kg</span>
+                </div>
+                <div>
+                    <strong>Goal</strong>
+                    <span>{{ user.goal }}</span>
+                </div>
+                <div>
+                    <strong>Intensity</strong>
+                    <span>{{ user.intensity }}</span>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <section class="card">
+            <span class="badge">WORKOUT PLAN</span>
+            <h2>Your plan</h2>
+            <pre class="plan">{{ plan }}</pre>
+        </section>
+
+        <section class="card">
+            <span class="badge">NUTRITION TIP</span>
+            <div class="tip">
+                <pre class="plan">{{ nutrition_tip }}</pre>
+            </div>
+        </section>
+
+        <section class="card">
+            <span class="badge">FEEDBACK</span>
+            <form method="post" action="/submit-feedback">
+                <input type="hidden" name="user_id" value="{{ user.user_id }}">
+                <label>
+                    Tell us how you'd like to improve the plan
+                    <textarea name="feedback" rows="5" placeholder="Add details about recovery, workout focus, or intensity..."></textarea>
+                </label>
+                <div style="margin-top: 18px;">
+                    <button type="submit">Update plan with feedback</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # .gitignore
 
 __pycache__/
@@ -13,3 +14,24 @@ __pycache__/
 .coverage
 htmlcov/
 .DS_Store
+=======
+venv/
+.venv/
+fitbuddy-env/
+
+__pycache__/
+*.py[cod]
+
+.pytest_cache/
+
+.env
+
+*.db
+*.sqlite
+*.sqlite3
+
+.vscode/
+.idea/
+
+.DS_Store
+>>>>>>> e41828e (Initial FitBuddy project)
